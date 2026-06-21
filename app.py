@@ -16,6 +16,13 @@ db = SQLAlchemy(app)
 
 def get_movie_recommendations(username, top_n=5):
     df_ratings = pd.read_sql_table('ratings', db.engine)
+    
+    # optimized memory
+    df_ratings['rating'] = df_ratings['rating'].astype('float32')
+    movie_counts = df_ratings['movie_id'].value_counts()
+    popular_movies = movie_counts[movie_counts >= 15].index
+    df_ratings = df_ratings[df_ratings['movie_id'].isin(popular_movies)]
+
     matrix = df_ratings.pivot(index='username', columns='movie_id', values='rating')
     
     if username not in matrix.index:
