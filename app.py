@@ -36,7 +36,7 @@ def get_movie_recommendations(username, top_n=5):
     df_ratings = pd.read_sql_query(ratings_query, db.engine, params=params)
     df_ratings['rating'] = df_ratings['rating'].astype('float32')
 
-    matrix = df_ratings.pivot(index='username', columns='movie_id', values='rating')
+    matrix = df_ratings.pivot(index='username', columns='movie_id', values='rating', aggfunc = 'mean')
     
     if username not in matrix.index:
         top_movies = df_ratings.groupby('movie_id').rating.count().sort_values(ascending=False).head(top_n).index
