@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Your Preferences</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #1e1e1e;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        h2 { color: #00adb5; }
+        p { color: #aaaaaa; margin-bottom: 2rem; }
+        .movie-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #333;
+        }
+        .movie-title { font-weight: bold; }
+        select {
+            padding: 0.5rem;
+            background-color: #2a2a2a;
+            color: white;
+            border: 1px solid #444;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 1rem;
+            margin-top: 2rem;
+            background-color: #00adb5;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover { background-color: #008c95; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome to the Matrix! 🍿</h2>
+        <p>Before we generate your personalized list, tell us what you think of these classics. (Leave blank if you haven't seen it!)</p>
+
+        <form method="POST">
+            {% for movie in movies %}
+            <div class="movie-row">
+                <span class="movie-title">{{ movie.title }}</span>
+                <select name="{{ movie.movie_id }}">
+                    <option value="">Never seen it</option>
+                    <option value="5">⭐⭐⭐⭐⭐ Masterpiece</option>
+                    <option value="4">⭐⭐⭐⭐ Great</option>
+                    <option value="3">⭐⭐⭐ Good</option>
+                    <option value="2">⭐⭐ Meh</option>
+                    <option value="1">⭐ Terrible</option>
+                </select>
+            </div>
+            {% endfor %}
+            
+            <button type="submit">Generate My Recommendations</button>
+        </form>
+    </div>
+</body>
+</html>
